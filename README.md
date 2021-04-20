@@ -1,6 +1,6 @@
-# wp-gutenberg-boilerplate
+# wp-gutenberg-shy
 
-> A boilerplate WordPress Gutenberg block
+> A gutenberg format to insert shy characters for word breaking
 
 ## Requirements
 
@@ -44,7 +44,7 @@ Build assets
 
 During compilation a `languages/javascript.pot` containing the translatable strings from JavaScript will be created. This needs to be converted to PHP which is done automatically in the next step.
 
-Rebuild POT files (after this, copy to each language as languages/wp-gutenberg-boilerplate-<langcode>.po and translate it)
+Rebuild POT files (after this, copy to each language as languages/wp-gutenberg-shy-<langcode>.po and translate it)
 
     npm run lang:pot
 

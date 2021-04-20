@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name:        Gutenberg Plugin Boilerplate
+Plugin Name:        Gutenberg Shy Format
 Plugin URI:         http://genero.fi
-Description:        A boilerplate WordPress Gutenberg block
+Description:        A gutenberg format to insert shy characters for word breaking
 Version:            1.0.0
 Author:             Genero
 Author URI:         http://genero.fi/
 License:            MIT License
 License URI:        http://opensource.org/licenses/MIT
 */
-namespace GeneroWP\BlockBoilerplate;
+namespace GeneroWP\GutenbergShyFormat;
 
 use Puc_v4_Factory;
 use GeneroWP\Common\Singleton;
@@ -31,10 +31,10 @@ class Plugin
     use Assets;
 
     public $version = '1.0.0';
-    public $plugin_name = 'wp-gutenberg-boilerplate';
+    public $plugin_name = 'wp-gutenberg-shy';
     public $plugin_path;
     public $plugin_url;
-    public $github_url = 'https://github.com/generoi/wp-gutenberg-boilerplate';
+    public $github_url = 'https://github.com/generoi/wp-gutenberg-shy';
 
     public function __construct()
     {
@@ -48,26 +48,7 @@ class Plugin
 
     public function init()
     {
-        add_action('enqueue_block_assets', [$this, 'block_assets']);
         add_action('enqueue_block_editor_assets', [$this, 'block_editor_assets']);
-
-        foreach (glob(__DIR__ . '/src/blocks/*/*.php') as $file) {
-            $composer = __NAMESPACE__ . str_replace(
-                ['/', '.php'],
-                ['\\', ''],
-                Str::after($file, __DIR__ . '/src')
-            );
-
-            if (is_subclass_of($composer, Block::class) && ! (new ReflectionClass($composer))->isAbstract()) {
-                (new $composer())->compose();
-            }
-        }
-    }
-
-    public function block_assets()
-    {
-        $this->enqueueStyle("{$this->plugin_name}/css", 'dist/style.css');
-        $this->enqueueScript("{$this->plugin_name}/js", 'dist/index.js');
     }
 
     public function block_editor_assets()

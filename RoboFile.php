@@ -9,11 +9,11 @@ class RoboFile extends \Robo\Tasks
     use \Generoi\Robo\Task\Placeholder\loadTasks;
     use \Generoi\Robo\Command\SearchReplaceCommand;
 
-    public $machineName = 'wp-gutenberg-boilerplate';
-    public $name = 'Gutenberg Plugin Boilerplate';
-    public $namespace = 'BlockBoilerplate';
-    public $description = 'A boilerplate WordPress Gutenberg block';
-    public $blockName = 'gutenberg-boilerplate';
+    public $machineName = 'wp-gutenberg-shy';
+    public $name = 'Gutenberg Shy Format';
+    public $namespace = 'GutenbergShyFormat';
+    public $description = 'A gutenberg format to insert shy characters for word breaking';
+    public $blockName = 'gutenberg-shy';
 
     public function rename($machineName = null, $options = [
         'force' => false,
