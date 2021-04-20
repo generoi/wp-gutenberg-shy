@@ -1,2 +1,8 @@
-// Load all block editor styles
-@import './blocks/example/assets/editor';
+span.is-shy-character::after {
+  content: '-';
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  line-height: 1;
+  display: inline-block;
+  opacity: 0.5;
+}

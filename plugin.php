@@ -48,10 +48,21 @@ class Plugin
 
     public function init()
     {
-        add_action('enqueue_block_editor_assets', [$this, 'block_editor_assets']);
+        add_action('enqueue_block_editor_assets', [$this, 'blockEditorAssets']);
+        add_filter('render_block', [$this, 'unwrapShySpan']);
     }
 
-    public function block_editor_assets()
+    public function unwrapShySpan($content)
+    {
+        $content = preg_replace(
+            '|<span[^>]+class="[^"]*is-shy-character[^"]*">[^<]*</span>|i',
+            '&#173;',
+            $content
+        );
+        return $content;
+    }
+
+    public function blockEditorAssets()
     {
         $this->enqueueStyle("{$this->plugin_name}/editor/css", 'dist/editor.css', ['wp-edit-blocks', 'common']);
 
