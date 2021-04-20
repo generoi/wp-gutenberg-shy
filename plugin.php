@@ -14,8 +14,6 @@ namespace GeneroWP\GutenbergShyFormat;
 use Puc_v4_Factory;
 use GeneroWP\Common\Singleton;
 use GeneroWP\Common\Assets;
-use Illuminate\Support\Str;
-use ReflectionClass;
 
 if (!defined('ABSPATH')) {
     exit;
