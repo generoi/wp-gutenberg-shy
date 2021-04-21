@@ -1,6 +1,6 @@
 # wp-gutenberg-shy
 
-> A gutenberg format to insert shy characters for word breaking
+> A gutenberg format to insert soft hyphens.
 
 ![shy](https://user-images.githubusercontent.com/302736/115391292-b4d5e000-a1b5-11eb-82cf-2ec8b6416816.gif)
 
