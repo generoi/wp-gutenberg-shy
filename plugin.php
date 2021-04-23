@@ -11,10 +11,6 @@ License URI:        http://opensource.org/licenses/MIT
 */
 namespace GeneroWP\GutenbergShyFormat;
 
-use Puc_v4_Factory;
-use GeneroWP\Common\Singleton;
-use GeneroWP\Common\Assets;
-
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -25,22 +21,18 @@ if (file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
 
 class Plugin
 {
-    use Singleton;
-    use Assets;
+    protected static $instance;
 
-    public $version = '1.0.0';
-    public $plugin_name = 'wp-gutenberg-shy';
-    public $plugin_path;
-    public $plugin_url;
-    public $github_url = 'https://github.com/generoi/wp-gutenberg-shy';
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new static();
+        }
+        return self::$instance;
+    }
 
     public function __construct()
     {
-        $this->plugin_path = plugin_dir_path(__FILE__);
-        $this->plugin_url = plugin_dir_url(__FILE__);
-
-        Puc_v4_Factory::buildUpdateChecker($this->github_url, __FILE__, $this->plugin_name);
-
         add_action('plugins_loaded', [$this, 'init']);
     }
 
@@ -50,7 +42,13 @@ class Plugin
         add_filter('render_block', [$this, 'unwrapShySpan']);
     }
 
-    public function unwrapShySpan($content)
+    public function assetUrl(string $asset): string
+    {
+        $manifest = json_decode(file_get_contents(__DIR__ . '/mix-manifest.json'), true);
+        return plugins_url($manifest[$asset], __FILE__);
+    }
+
+    public function unwrapShySpan(string $content): string
     {
         $content = preg_replace(
             '|<span[^>]+class="[^"]*is-shy-character[^"]*">[^<]*</span>|i',
@@ -62,10 +60,19 @@ class Plugin
 
     public function blockEditorAssets()
     {
-        $this->enqueueStyle("{$this->plugin_name}/editor/css", 'dist/editor.css', ['wp-edit-blocks', 'common']);
-
-        if ($manifest = include __DIR__ . '/dist/manifest.asset.php') {
-            $this->enqueueScript("{$this->plugin_name}/editor/js", 'dist/editor.js', $manifest['dependencies']);
+        if ($manifest = include __DIR__ . '/dist/editor.asset.php') {
+            wp_enqueue_style(
+                'wp-gutenberg-shy/editor.css',
+                $this->assetUrl('/dist/editor.css'),
+                ['wp-edit-blocks', 'common'],
+                null
+            );
+            wp_enqueue_script(
+                'wp-gutenberg-shy/editor.js',
+                $this->assetUrl('/dist/editor.js'),
+                $manifest['dependencies'],
+                null
+            );
         }
     }
 }

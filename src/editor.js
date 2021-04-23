@@ -1,6 +1,6 @@
 import { registerFormatType, insert, create } from '@wordpress/rich-text';
 import { RichTextToolbarButton } from '@wordpress/block-editor';
-import shyIcon from './icons/shy';
+import { minus } from '@wordpress/icons';
 
 function InsertShy({ isActive, value, onChange, onFocus }) {
   function onClick() {
@@ -8,12 +8,12 @@ function InsertShy({ isActive, value, onChange, onFocus }) {
       html: '<span class="is-shy-character">&#173;</span>',
     });
     onChange(insert(value, el));
-    onFocus && onFocus(); // older gutenberg doesnt have it
-  };
+    onFocus();
+  }
 
   return (
     <RichTextToolbarButton
-      icon={ shyIcon }
+      icon={ minus }
       title="Insert Soft Hyphen"
       onClick={ onClick }
       isActive={ isActive }
